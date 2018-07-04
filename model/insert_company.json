@@ -1,0 +1,40 @@
+{
+    "isin": "",
+    "symbol": "",
+    "companyName": "",
+    "exchange": "",
+    "industry": "",
+    "website": "",
+    "description": "",
+    "ceo": "",
+    "issueType": "",
+    "sector":"",
+    "tags": [],
+    "eps": {
+        "actualEPS": "",
+        "consensusEPS": "",
+        "estimatedEPS": "",
+        "announceTime": "",
+        "numberOfEstimates": "",
+        "EPSSurpriseDollar": "",
+        "EPSReportDate": "",
+        "fiscalPeriod": "",
+        "fiscalEndDate": "",
+        "yearAgo": "",
+        "yearAgoChangePercent": "",
+        "estimatedChangePercent": "",
+        "symbolId": ""
+    },
+    "highPrice": { 
+        "date":"",
+        "value":""
+    },
+    "lowPrice": { 
+        "date":"",
+        "value":""
+    },
+    "closePrice": { 
+        "date":"",
+        "value":""
+    }
+}
