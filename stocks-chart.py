@@ -3,6 +3,7 @@ from cassandra.cluster import Cluster
 from datetime import datetime
 import json
 import logging
+import .ISIN-ticker
 
 cluster = Cluster(['localhost'], 32774)
 
