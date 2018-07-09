@@ -3,7 +3,7 @@ from cassandra.cluster import Cluster
 from datetime import datetime
 import json
 import logging
-import .ISIN-ticker
+import isin-ticker as it
 
 cluster = Cluster(['localhost'], 32774)
 
@@ -21,16 +21,16 @@ def convertDateFormat(oldDate):
     try:
         dtobj = datetime.strptime(oldDate, '%B %d, %Y')
         newDate = datetime.strftime(dtobj, '%Y-%m-%d')
-        
     except Exception as e:
         print("Error converting datetime format: " + str(e))
-    finally:
+    else:
         return newDate
 
 def prepareJson(isin, ticker):
-    with open('./model/insert_company.json') as json_file:
-        data = json.load(json_file)
-        try:
+    try:
+        with open('./model/insert_company.json') as json_file:
+            data = json.load(json_file)
+        
             stock = Stock(ticker)
             logging.info("Retrieving company info...")
             stock_company = stock.get_company()
@@ -71,11 +71,11 @@ def prepareJson(isin, ticker):
             data['closePrice']['date']=convertDateFormat(stock_quote['latestTime'])
             data['closePrice']['value']=str(stock_quote['close'])
             
-        except Exception as e:
-            print("Error: " + str(e))
+    except FileNotFoundError as fnf:
+        print("{} . Il file specificato non esiste.".format(fnf))
 
-        finally:
-         return data
+    else:
+        return data
 
 def insertNewCompany(data):
     addNewCoQuery = "INSERT INTO iexfinance_stocks.stocks JSON '" + json.dumps(data) + "'"
@@ -84,11 +84,12 @@ def insertNewCompany(data):
     for row in rows:
         print(row[0])
 
-insertNewCompany(prepareJson('US0378331005', 'AAPL'))
 
 
-rows = session.execute('SELECT * FROM stocks')
-for row in rows:
-    print(row.isin, row.symbol)
+
+
+# rows = session.execute('SELECT * FROM stocks')
+# for row in rows:
+#     print(row.isin, row.symbol)
 
     
