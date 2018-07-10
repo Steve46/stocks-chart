@@ -3,9 +3,9 @@ from cassandra.cluster import Cluster
 from datetime import datetime
 import json
 import logging
-import isin-ticker as it
+from isinticker import requestIsin
 
-cluster = Cluster(['localhost'], 32774)
+cluster = Cluster(['localhost'], 32769)
 
 session = cluster.connect('iexfinance_stocks')
 
@@ -40,7 +40,7 @@ def prepareJson(isin, ticker):
             data['exchange']=stock_company['exchange']
             data['industry']=stock_company['industry']
             data['website']=stock_company['website']
-            data['description']=stock_company['description']
+            #data['description']=stock_company['description']
             data['ceo']=stock_company['CEO']
             data['issueType']=stock_company['issueType']
             data['sector']=stock_company['sector']
@@ -80,12 +80,20 @@ def prepareJson(isin, ticker):
 def insertNewCompany(data):
     addNewCoQuery = "INSERT INTO iexfinance_stocks.stocks JSON '" + json.dumps(data) + "'"
     #print(addNewCoQuery)
-    rows = session.execute(addNewCoQuery)
-    for row in rows:
-        print(row[0])
+    session.execute(addNewCoQuery)
+
+"""trovare fonte da cui recuperare un elenco di isin"""
+isinlist = ["US02079K3059", "US2546871060", "US88160R1014", "IT0000336518", "IT0000072618"]
+isinlist2 = ["US5949181045", "US30303M1027", "US70450Y1038"]
 
 
-
+stocksarray = requestIsin(isinlist2)
+for singlestock in stocksarray:
+    if singlestock.ticker is not None:
+        query_data = prepareJson(singlestock.isin, singlestock.ticker)
+        insertNewCompany(query_data)
+    else:
+        print("No ticker found for ISIN : {}.".format(singlestock.isin))
 
 
 # rows = session.execute('SELECT * FROM stocks')

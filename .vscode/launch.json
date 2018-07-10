@@ -4,11 +4,18 @@
     // Per ulteriori informazioni, visitare: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "Python: Current File",
+            "name": "Python: isin ticker",
             "type": "python",
             "request": "launch",
-            "program": "/home/steve/Documenti/workspace/git/stocks-chart/ISIN-ticker.py"
+            "program": "/home/steve/Documenti/workspace/git/stocks-chart/isinticker.py"
+        },
+        {
+            "name": "Python: stocks chart",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/steve/Documenti/workspace/git/stocks-chart/stockschart.py"
         },
         {
             "name": "Python: Attach",

@@ -17,7 +17,6 @@ def requestIsin(isin):
             for i in isin:
                 jDes[0]['idValue']=i
                 dati= json.dumps(jDes)
-                print(dati)
                 req = requests.post(url, data=dati, headers=header)
                 if 'data' in req.json()[0]:
                     req_json = req.json()[0]['data']
@@ -26,11 +25,10 @@ def requestIsin(isin):
                             ticker = l['ticker']
                             simpleStock = SimpleStock(i, ticker)
                             resp.append(simpleStock)
+                            break
                 else:
                     simpleStockError = SimpleStock(i, None)
                     resp.append(simpleStockError)
             return resp
     except FileNotFoundError as fnf:
         print("{} . Il file specificato non esiste.".format(fnf))
-
-print(requestIsin(["US0378331005", "US88160R1014"]))
